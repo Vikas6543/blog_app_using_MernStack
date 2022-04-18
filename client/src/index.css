@@ -1,0 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.nav {
+    height: 8vh;
+}
+
+.ck-editor__editable {
+    height: 15vh;
+}
+
+.para {
+    text-indent: 20px;
+}
