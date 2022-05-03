@@ -10,6 +10,10 @@ const postSchema = new Schema({
     type: String,
     required: true,
   },
+  category: {
+    type: String,
+    default: 'all',
+  },
   visibility: {
     type: String,
     default: 'show',

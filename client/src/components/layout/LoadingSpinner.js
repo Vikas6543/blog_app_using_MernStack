@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Loader = () => {
+const LoadingSpinner = () => {
   return (
     <div>
       <svg
-        className='animate-spin h-5 w-5 text-black'
+        className='animate-spin h-10 w-10 text-black'
         xmlns='http://www.w3.org/2000/svg'
         fill='none'
         viewBox='0 0 24 24'
@@ -27,4 +27,4 @@ const Loader = () => {
   );
 };
 
-export default Loader;
+export default LoadingSpinner;

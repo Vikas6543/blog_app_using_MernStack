@@ -4,9 +4,6 @@
     box-sizing: border-box;
 }
 
-.nav {
-    height: 8vh;
-}
 
 .ck-editor__editable {
     height: 15vh;
@@ -14,4 +11,8 @@
 
 .para {
     text-indent: 20px;
+}
+
+.dropdown-btn {
+    transition: all 0.5s;
 }

@@ -3,8 +3,8 @@ const router = express.Router();
 const Post = require('../models/postModel');
 
 // create a new post
-router.post('/post/new', async (req, res) => {
-  const { title, content, visibility } = req.body;
+router.post('/new', async (req, res) => {
+  const { title, content, category, visibility } = req.body;
 
   // check title, post are not empty
   if (!title || !content) {
@@ -18,6 +18,7 @@ router.post('/post/new', async (req, res) => {
     const post = new Post({
       title,
       content,
+      category,
       visibility,
     });
 
@@ -32,17 +33,17 @@ router.post('/post/new', async (req, res) => {
 });
 
 // get all posts
-router.get('/post/all', async (req, res) => {
+router.get('/all', async (req, res) => {
   try {
     const posts = await Post.find();
-    res.status(200).json(posts);
+    res.status(200).json({ message: 'Posts retrieved successfully', posts });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
 
 // update a post
-router.put('/post/edit/:id', async (req, res) => {
+router.put('/edit/:id', async (req, res) => {
   const { title, content } = req.body;
   try {
     // find post by id
@@ -64,7 +65,7 @@ router.put('/post/edit/:id', async (req, res) => {
 });
 
 // delete a post
-router.delete('/post/delete/:id', async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
   try {
     // find post by id
     const post = await Post.findById(req.params.id);

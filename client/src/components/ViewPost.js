@@ -11,14 +11,19 @@ const HomePage = () => {
 
   const { id } = useParams();
 
-  useEffect(() => {
-    const getPost = async () => {
+  const getPost = async () => {
+    try {
       const { data } = await Axios.get('http://localhost:5000/post/all');
       const post = data.find((post) => post._id === id);
       setTitle(post.title);
       setContent(post.content);
       setPostedTime(post.date);
-    };
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
     getPost();
   }, []);
 

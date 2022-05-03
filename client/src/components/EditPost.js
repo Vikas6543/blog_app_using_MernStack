@@ -3,29 +3,47 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Axios from 'axios';
+import { toast } from 'react-toastify';
 
 const CreatePost = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
   const navigate = useNavigate();
+  toast.configure();
   const { id } = useParams();
 
   const handleUpdate = async () => {
-    await Axios.put(`http://localhost:5000/post/edit/${id}`, {
-      title,
-      content,
-    });
-    navigate('/');
+    try {
+      await Axios.put(`http://localhost:5000/post/edit/${id}`, {
+        title,
+        content,
+      });
+      toast.success('Post updated successfully', {
+        autoClose: 2000,
+      });
+      navigate('/');
+    } catch (error) {
+      toast.error(error.response.data.message, {
+        autoClose: 2000,
+      });
+    }
   };
 
-  useEffect(() => {
-    const getPost = async () => {
+  const getPost = async () => {
+    try {
       const { data } = await Axios.get('http://localhost:5000/post/all');
       const post = data.find((post) => post._id === id);
       setTitle(post.title);
       setContent(post.content);
-    };
+    } catch (error) {
+      toast.error(error.response.data.message, {
+        autoClose: 2000,
+      });
+    }
+  };
+
+  useEffect(() => {
     getPost();
   }, []);
 
@@ -36,7 +54,7 @@ const CreatePost = () => {
           to='/'
           className='bg-gray-800 hover:bg-gray-700 text-white py-1 px-2 rounded text-sm'
         >
-          <i class='fa-solid fa-arrow-left'></i> Go Back
+          <i className='fa-solid fa-arrow-left'></i> Go Back
         </Link>
       </div>
       <div className='w-4/6 lg:3/6 mx-auto'>
@@ -52,7 +70,7 @@ const CreatePost = () => {
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
-        <div className=''>
+        <div>
           <CKEditor
             editor={ClassicEditor}
             data={content}
